@@ -9,7 +9,7 @@ class DoubleConv(nn.Module):
         # nice trick to apply 3x3 kernels 2 times instead of 5x5 once, as well as ReLU nonlinearity 
         self.double_conv = nn.Sequential(
             nn.Conv2d(in_channels, out_channels, kernel_size=3, padding=1, bias=False),
-            nn.BatchNorm2d(out_channels),
+            nn.BatchNorm2d(out_channels), # mean 0, std deivation 1
             nn.ReLU(inplace=True),
             nn.Conv2d(out_channels, out_channels, kernel_size=3, padding=1, bias=False),
             nn.BatchNorm2d(out_channels),
@@ -24,7 +24,7 @@ class Down(nn.Module):
     def __init__(self, in_channels, out_channels):
         super().__init__()
         self.maxpool_conv = nn.Sequential(
-            nn.MaxPool2d(2),
+            nn.MaxPool2d(2), # take maximum value of 2x2 gird shirnking the image
             DoubleConv(in_channels, out_channels)
         )
 
@@ -40,7 +40,7 @@ class Up(nn.Module):
             self.up = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
             self.conv = DoubleConv(in_channels, out_channels)
         else:
-            self.up = nn.ConvTranspose2d(in_channels, in_channels // 2, kernel_size=2, stride=2)
+            self.up = nn.ConvTranspose2d(in_channels, in_channels // 2, kernel_size=2, stride=2) # has learnable parametrs
             self.conv = DoubleConv(in_channels, out_channels)
 
     def forward(self, x1, x2):

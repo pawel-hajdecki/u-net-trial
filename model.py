@@ -42,7 +42,7 @@ class UNet(nn.Module):
 
 # Quick verification block
 if __name__ == "__main__":
-    model = UNet(n_channels=3, n_classes=1)
+    model = UNet(n_channels=3, n_classes=3)
     x = torch.randn(1, 3, 256, 256)
     y = model(x)
     print("Output shape:", y.shape)  # Should match [1, 1, 256, 256]
