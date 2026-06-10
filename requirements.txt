@@ -1,0 +1,7 @@
+# --- Core Deep Learning with CUDA 13.0 Support ---
+--index-url https://download.pytorch.org/whl/cu130
+torch
+torchvision
+
+# --- Image Processing ---
+Pillow>=10.3.0
